@@ -181,15 +181,12 @@ namespace Buffer
 		cont--;
 	}
 
-	void serialEvent()
+	void addBuffer(const byte dado)
 	{
-		while(Serial.available())
-		{
-			if(cont >= MAX_CONT_BUFFER)
-				removeBuffer();
-			bufferAcc[cont++] = static_cast<byte>(Serial.read());
-			dadoNovo = true;
-		}
+		if(cont >= MAX_CONT_BUFFER)
+			removeBuffer();
+		bufferAcc[cont++] = dado;
+		dadoNovo = true;
 	}
 }
 
@@ -284,4 +281,10 @@ void setup()
 void loop()
 {
 	Tratamento::interpretaDados();
+}
+
+void serialEvent()
+{
+	while(Serial.available())
+		Buffer::addBuffer(static_cast<byte>(Serial.read()));
 }
