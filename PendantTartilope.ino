@@ -6,6 +6,8 @@
 
 //#define MODO_ECO
 //#define MODO_REPASSA
+//#define DISPLAY_MENOR
+#define TESTE_BOTOES
 
 // inicializa
 // clear -> '%' + '@' + 140
@@ -18,11 +20,19 @@
 namespace Lcd
 {
 	//Inicializa o LCD
+#ifdef DISPLAY_MENOR
+	LiquidCrystal lcd(A4, A5, A0, A1, A2, A3);
+#else
 	LiquidCrystal lcd(A5, A4, A0, A1, A2, A3);
+#endif
 
 	void inicializar()
 	{
+	#ifdef DISPLAY_MENOR
+		lcd.begin(20, 2);
+	#else
 		lcd.begin(40, 2);
+	#endif
 		lcd.setCursor(0, 0);
 		lcd.print("        Inicializando LCD...  ");/*
 		lcd.print("TARTILOPE V2F - LABSOLDA - FINEP - SPS");
@@ -45,7 +55,7 @@ namespace Lcd
 
 namespace Botoes
 {
-	const int BUZZER = 3;
+	const int BUZZER = LED_BUILTIN;// 3;
 	const int BOTOES_FILA_1 = 4; //PD4
 	const int BOTOES_FILA_2 = 5; //PD5
 	const int BOTOES_FILA_3 = 6; //PD6
@@ -177,8 +187,7 @@ namespace Buffer
 
 	void removeBuffer()
 	{
-		memmove(bufferAcc, bufferAcc + 1, cont - 1);
-		cont--;
+		memmove(bufferAcc, bufferAcc + 1, --cont);
 	}
 
 	void addBuffer(const byte dado)
@@ -259,6 +268,10 @@ namespace Tratamento
 
 	void interpretaDados()
 	{
+	#ifdef TESTE_BOTOES
+		//Lcd::lcd.clear();
+		Lcd::lcd.print(Botoes::leBotoes());
+	#endif
 		if(Buffer::cont > 0)
 		{
 		#ifdef MODO_ECO

@@ -1,0 +1,62 @@
+*****************************************************************
+      SolidWorks Corporation - Relatório de status do Processador de IGES
+*****************************************************************
+=================================================================
+Informações gerais
+=================================================================
+Enviando ID de produto do sistema : Montagem.SLDASM
+Recebendo ID de produto do sistema : Montagem.SLDASM
+Nome do arquivo                    : C:\Users\Gean\Documents\Lucas\003 - TEC\Teclado 2019 2.0\Versão final\Montagem.IGS
+Enviando sistema               : SolidWorks 2013
+Versão do pré-processador         : SolidWorks 2013
+Data de criação do arquivo           : 200123.163227
+Data de criação do modelo           : 200123.163227
+Unidades                        : MM
+Escala de espaço do modelo            : 1
+Autor                       : Elias
+Organização                 : 
+
+
+=================================================================
+Informações de processamento da entidade
+=================================================================
+
+
+=================================================================
+Análise de precisão do arquivo IGES:
+=================================================================
+
+
+=================================================================
+Resumo de entidade
+=================================================================
+-----------------------------------------------------------------
+Nome do tipo                                         Contagem convertida
+---- ----                                         ----- ---------
+100  Arc                                          10814     10814
+102  Composite curve                              25340     25340
+110  Line                                         48539     48539
+120  Surface of revolution                         2945      2945
+124  Transformation matrix                         8931      8931
+126  Rational B-spline curve                      66447     66447
+128  Rational B-spline surface                     8798      8798
+142  Curve on a parametric surface                12670     12670
+144  Trimmed parametric surface                   11743     11743
+308  Subfigure definition                            19        19
+314  Color definition                              8416      8416
+408  Singular subfigure instance                     59        59
+_________________________________________________________________
+
+
+=================================================================
+Resumo de resultados
+=================================================================
+Tipo de recurso do SolidWorks                Contagem
+-----------------------                -----
+Recursos sólidos                       0
+Recursos de superfície                     0
+Recursos de curva/esboço                0
+--------------------------------------------
+Hora inicial: terça-feira, setembro 22, 2020 00:17:01
+Hora de término: terça-feira, setembro 22, 2020 00:17:08
+Tempo de processamento: 0 days, 00 hours, 00 mins, 07 secs
