@@ -248,7 +248,7 @@ namespace Lcd
 		const int offset = offsetLogo + 5;
 		lcd.setCursor(offset, 0);
 		lcd.print("        SPS");
-		const String inst = "Sistemas e Solucoes para Soldagem";
+		const String inst = "Sistemas e Processos de Soldagem";
 		const auto iniLcd = offset;
 		const auto lenght = 32 - iniLcd;
 		const auto lastLcd = inst.length() - lenght;
