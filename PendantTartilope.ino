@@ -4,10 +4,15 @@
  Author:	Felippe Kalil Mendonça
 */
 
+// --- OPÇÕES DEBUG ---//
 //#define MODO_ECO
 //#define MODO_REPASSA
 //#define DISPLAY_MENOR
-#define TESTE_BOTOES
+//#define TESTE_BOTOES
+
+
+// --- CONFIG ---//
+#define MODO_SPS //Tela inicial SPS, senão LABSOLDA
 
 // inicializa
 // clear -> '%' + '@' + 140
@@ -26,6 +31,238 @@ namespace Lcd
 	LiquidCrystal lcd(A5, A4, A0, A1, A2, A3);
 #endif
 
+	byte logoLabsolda[][8] = { {
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00111,
+		B00100,
+		B00100,
+		B00100
+	},{
+		B00000,
+		B00001,
+		B00111,
+		B01111,
+		B11110,
+		B01100,
+		B01100,
+		B00100
+	},{
+		B00000,
+		B11000,
+		B11100,
+		B00010,
+		B00001,
+		B00000,
+		B01000,
+		B01100
+	},{
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B11100,
+		B00100,
+		B00100,
+		B00100
+	},{
+		B00100,
+		B00100,
+		B00100,
+		B00111,
+		B00000,
+		B00000,
+		B00000,
+		B00000
+	},{
+		B00110,
+		B00010,
+		B00000,
+		B10000,
+		B01000,
+		B00111,
+		B00011,
+		B00000
+	},{
+		B00100,
+		B00110,
+		B00110,
+		B01111,
+		B11110,
+		B11100,
+		B10000,
+		B00000/*
+	},{
+		B00100,
+		B00010,
+		B00010,
+		B00111,
+		B11110,
+		B11100,
+		B11000,
+		B00000//*/
+	},{
+		B00100,
+		B00100,
+		B00100,
+		B11100,
+		B00000,
+		B00000,
+		B00000,
+		B00000
+	}
+
+	}; 
+	
+	byte logoSPS[][8] = { {
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000
+	},{
+		B00000,
+		B00010,
+		B01110,
+		B01110,
+		B11100,
+		B11000,
+		B11000,
+		B11001
+	},{
+		B00000,
+		B01000,
+		B01110,
+		B01110,
+		B00111,
+		B00011,
+		B00011,
+		B10011
+	},{
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000,
+		B00000
+	},{
+		B00001,
+		B00001,
+		B00001,
+		B00011,
+		B00011,
+		B00111,
+		B00111,
+		B00000
+	},{
+		B10011,
+		B10011,
+		B10001,
+		B10000,
+		B10000,
+		B00000,
+		B00000,
+		B00000
+	},{
+		B11001,
+		B11001,
+		B10001,
+		B00001,
+		B00001,
+		B00000,
+		B00000,
+		B00000
+	},{
+		B10000,
+		B10000,
+		B10000,
+		B11000,
+		B11000,
+		B11100,
+		B11100,
+		B00000
+	}
+	};
+
+	const byte offsetLogo = 6, nCharLogo = 8;
+
+	void createChar(const uint8_t index, uint8_t customChar[])
+	{
+		lcd.createChar(index, customChar);
+	}
+
+	void criaLogoLab()
+	{
+		for (int i = 0; i < nCharLogo; i++)
+			createChar(i, logoLabsolda[i]);
+	}
+
+	void criaLogoSPS()
+	{
+		for (int i = 0; i < nCharLogo; i++)
+			createChar(i, logoSPS[i]);
+	}
+
+	void imprimeLogo()
+	{
+		lcd.setCursor(offsetLogo, 0);
+		for (uint8_t i = 0; i < nCharLogo; i++)
+		{
+			if (i == nCharLogo / 2)
+				lcd.setCursor(offsetLogo, 1);
+			lcd.write(static_cast<uint8_t>(i));
+		}
+	}
+
+	void telaInicialLabsolda()
+	{
+		criaLogoLab();
+		imprimeLogo();
+		const int offset = offsetLogo + 5;
+		lcd.setCursor(offset, 0);
+		lcd.print("      LABSOLDA");
+		const String inst = "Instituto de Soldagem e Mecatronica";
+		const auto iniLcd = offset;
+		const auto lenght = 32 - iniLcd;
+		const auto lastLcd = inst.length() - lenght;
+		//delay(1000);
+		for (auto i = 0; i < lastLcd; i++)
+		{
+			lcd.setCursor(iniLcd, 1);
+			lcd.print(inst.substring(i, i + lenght + 1));
+			delay(150);
+		}
+	}
+
+	void telaInicialSPS()
+	{
+		criaLogoSPS();
+		imprimeLogo();
+		const int offset = offsetLogo + 5;
+		lcd.setCursor(offset, 0);
+		lcd.print("        SPS");
+		const String inst = "Sistemas e Solucoes para Soldagem";
+		const auto iniLcd = offset;
+		const auto lenght = 32 - iniLcd;
+		const auto lastLcd = inst.length() - lenght;
+		//delay(1000);
+		for (auto i = 0; i < lastLcd; i++)
+		{
+			lcd.setCursor(iniLcd, 1);
+			lcd.print(inst.substring(i, i + lenght + 1));
+			delay(150);
+			if(i == 0)
+				delay(1000);
+		}
+	}
+
 	void inicializar()
 	{
 	#ifdef DISPLAY_MENOR
@@ -33,12 +270,16 @@ namespace Lcd
 	#else
 		lcd.begin(40, 2);
 	#endif
-		lcd.setCursor(0, 0);
-		lcd.print("        Inicializando LCD...  ");/*
+#ifdef MODO_SPS
+		telaInicialSPS();
+#else
+		telaInicialLabsolda();
+#endif
+		lcd.setCursor(0, 0);/*
 		lcd.print("TARTILOPE V2F - LABSOLDA - FINEP - SPS");
 		lcd.setCursor(0, 1);
 		lcd.print("   OPERAR      DESLIGAR       INFO    ");//*/
-		delay(2000);
+		delay(500);
 		lcd.clear();
 	}
 
@@ -55,7 +296,7 @@ namespace Lcd
 
 namespace Botoes
 {
-	const int BUZZER = LED_BUILTIN;// 3;
+	const int BUZZER = /*LED_BUILTIN;*/ 3;
 	const int BOTOES_FILA_1 = 4; //PD4
 	const int BOTOES_FILA_2 = 5; //PD5
 	const int BOTOES_FILA_3 = 6; //PD6
